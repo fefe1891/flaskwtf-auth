@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Feedback
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Edit Feedback</h1>
+<div class="container">
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    {% for error in form.title.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+    <div class="form-group">
+      {{ form.title.label(class="form-label") }}
+      {{ form.title(class="form-control") }}
+    </div>
+
+    {% for error in form.content.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+    <div class="form-group">
+      {{ form.content.label(class="form-label") }}
+      {{ form.content(class="form-control") }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Feedback</button>
+  </form>
+</div>
+{% endblock %}

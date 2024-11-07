@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Hello, {{ user.first_name }} {{ user.last_name }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Hello, {{ user.first_name }} {{ user.last_name }}</h1>
+  <h3>Your Feedback:</h3>
+
+  {% if user.feedback %}  <!-- check if user.feedback has any entries -->
+    <ul class="list-group">
+      {% for feedback in user.feedback %}
+      <li class="list-group-item">
+        <div class="d-flex justify-content-between align-items-start">
+          <h4 class="mb-1">{{ feedback.title }}</h4>
+          <a href="{{ url_for('update_feedback', feedback_id=feedback.id)}}" class="btn btn-primary btn-sm">Edit</a>
+        </div>
+        <p>{{ feedback.content }}</p>
+
+        <form method="POST" action="{{ url_for('delete_feedback', feedback_id=feedback.id) }}">
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+  {% else %}  <!-- if user.feedback is empty -->
+    <p>No feedback available.</p>
+  {% endif %}
+
+  <a href="{{ url_for('add_feedback', username=user.username) }}" class="btn btn-primary mt-2">Add Feedback</a>
+
+  <form method="POST" action="{{ url_for('delete_user', username=user.username) }}" class="mt-2">
+    <button type="submit" class="btn btn-danger">Delete User</button>
+  </form>
+</div>
+{% endblock %}
